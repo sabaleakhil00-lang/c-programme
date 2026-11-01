@@ -1,0 +1,127 @@
+
+#include <stdio.h>
+#define MAX 100
+
+void selectionSort(float a[], int n);
+void bubbleSort(float a[], int n);
+void displayTopFive(float a[], int n);
+
+int main()
+{
+    float a[MAX];
+    int n, i, ch;
+
+    printf("Enter the number of students: ");
+    scanf("%d", &n);
+
+    if (n <= 0 || n > MAX)
+    {
+        printf("Invalid number of students.\n");
+        return 1;
+    }
+
+    printf("Enter first-year percentages:\n");
+    for (i = 0; i < n; i++)
+    {
+        scanf("%f", &a[i]);
+    }
+
+    do
+    {
+        printf("\n===== MENU =====\n");
+        printf("1. Selection Sort\n");
+        printf("2. Bubble Sort\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &ch);
+
+        switch (ch)
+        {
+            case 1:
+                selectionSort(a, n);
+
+                printf("Sorted percentages (ascending):\n");
+                for (i = 0; i < n; i++)
+                    printf("%.2f ", a[i]);
+
+                displayTopFive(a, n);
+                break;
+
+            case 2:
+                bubbleSort(a, n);
+
+                printf("Sorted percentages (ascending):\n");
+                for (i = 0; i < n; i++)
+                    printf("%.2f ", a[i]);
+
+                displayTopFive(a, n);
+                break;
+
+            case 3:
+                printf("Thank you!\n");
+                break;
+
+            default:
+                printf("Invalid choice. Try again.\n");
+        }
+
+    } while (ch != 3);
+
+    return 0;
+}
+
+// Selection Sort
+void selectionSort(float a[], int n)
+{
+    int i, j, min;
+    float temp;
+
+    for (i = 0; i < n - 1; i++)
+    {
+        min = i;
+
+        for (j = i + 1; j < n; j++)
+        {
+            if (a[j] < a[min])
+                min = j;
+        }
+
+        temp = a[i];
+        a[i] = a[min];
+        a[min] = temp;
+    }
+}
+
+// Bubble Sort
+void bubbleSort(float a[], int n)
+{
+    int i, j;
+    float temp;
+
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = 0; j < n - 1 - i; j++)
+        {
+            if (a[j] > a[j + 1])
+            {
+                temp = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = temp;
+            }
+        }
+    }
+}
+
+// Display top five scores
+void displayTopFive(float a[], int n)
+{
+    int i, count = 0;
+
+    printf("\nTop five scores:\n");
+
+    for (i = n - 1; i >= 0 && count < 5; i--)
+    {
+        printf("%.2f%%\n", a[i]);
+        count++;
+    }
+}
